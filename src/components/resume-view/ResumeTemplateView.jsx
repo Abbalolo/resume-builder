@@ -1,0 +1,120 @@
+import React, { useEffect, useState } from "react";
+
+function ResumeTemplateView() {
+  const [storedData, setStoredData] = useState({});
+
+  const getDataFromLocalStorage = () => {
+    const data = JSON.parse(localStorage.getItem("myAppState")) || {};
+    setStoredData(data);
+    console.log(data)
+  };
+
+  useEffect(() => {
+    getDataFromLocalStorage();
+  }, []);
+
+  return (
+    <div className="mx-5 my-3 flex flex-col gap-2 ">
+      {/* header */}
+      <div>
+        <h1 className="text-xl text-center capitalize">
+          {storedData.firstName} {storedData.lastName}
+        </h1>
+        <h3 className="text-[14px] text-center">
+          {storedData.address} | {storedData.conPhoneNumber} |{" "}
+          {storedData.conEmail} | {storedData.linkedin} | {storedData.website}
+        </h3>
+      </div>
+
+      <hr />
+
+      {/* summary section */}
+      <div>
+        <h2 className="font-semibold">{storedData.title}</h2>
+        <p className="text-xs">{storedData.profileSummary}</p>
+      </div>
+
+      {/* education section */}
+      <div className="flex flex-col gap-1">
+        <h3 className="text-[16px]">Education</h3>
+        <hr />
+        {/* {storedData.education.map((item, index) => ( */}
+        <div>
+          <div className="flex justify-between">
+            <h4 className="font-semibold text-sm">
+              {storedData.educationInstitution}
+            </h4>
+            <h5 className="font-semibold text-sm">
+              {storedData.eduStartDate} {storedData.eduEndDate}
+            </h5>
+          </div>
+          <p className="text-xs">{storedData.gPA}</p>
+        </div>
+        {/* ))} */}
+      </div>
+
+      {/* skills and interest section */}
+      <div>
+        <h3 className="text-[16px]">Skills and Interest</h3>
+        <hr />
+        <ul>
+          {storedData.skillsAndInterest &&
+            storedData.skillsAndInterest.map((item, index) => (
+              <li key={index} className="text-xs">
+                {item}
+              </li>
+            ))}
+        </ul>
+      </div>
+
+      {/* work experience section */}
+      <div className="flex flex-col gap-1">
+        <h3 className="text-[16px]">Work Experience</h3>
+        <hr />
+        {/* {storedData.workExperience.map((item, index) => ( */}
+        <div>
+          <div className="flex justify-between">
+            <h4 className="font-semibold text-sm">{storedData.companyName}</h4>
+            <h5 className="font-semibold text-sm">
+              {storedData.expStartDate} / {storedData.expEndDate}
+            </h5>
+          </div>
+          <p className="text-xs">{storedData.companyDescription}</p>
+          <div className="mt-1">
+            <h4 className="font-semibold text-sm">{storedData.position}</h4>
+            <ul className="text-xs ml-5">
+              <li>lorem lorem</li>
+              <li>lorem lorem</li>
+              <li>lorem lorem</li>
+            </ul>
+          </div>
+        </div>
+        {/* ))} */}
+      </div>
+
+      {/* project section */}
+      <div className="flex flex-col gap-1">
+        <h3 className="text-[16px]">Project</h3>
+        <hr />
+        {/* {storedData.project.map((item, index) => ( */}
+        <div>
+          <div className="flex justify-between">
+            <h4 className="font-semibold text-sm">{/* {item.title} */}</h4>
+            <h5 className="font-semibold text-sm">{/* {item.date} */}</h5>
+          </div>
+          <p className="text-xs">{/* {item.subtitle} */}</p>
+          {/* <ul className="text-xs ml-5">
+              {item.tasks.map((task, taskIndex) => (
+                <li key={taskIndex} className="list-disc">
+                  {task}
+                </li>
+              )}
+            </ul> */}
+        </div>
+        {/* ))} */}
+      </div>
+    </div>
+  );
+}
+
+export default ResumeTemplateView;
