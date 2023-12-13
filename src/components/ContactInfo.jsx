@@ -6,7 +6,7 @@ import { InputValueContext } from "../App";
 function ContactInfo() {
   const [arrow, setArrow] = useState(false)
   
-  const { values, setValues } = useContext(InputValueContext);
+  const { formState, dispatch } = useContext(InputValueContext);
 
   const inputs = [
     {
@@ -76,6 +76,7 @@ function ContactInfo() {
     {
       id: 9,
       name: "state",
+
       type: "text",
       placeholder: "Enter State",
       label: "State",
@@ -96,18 +97,15 @@ function ContactInfo() {
     setArrow(!arrow)
   }
   const onChange = (e) => {
-    setValues({...values, [e.target.name]: e.target.value})
+    // setValues({...values, [e.target.name]: e.target.value})
+    dispatch({type: "SUMBIT__SUCCESS" , payload: e.target.value , field: e.target.name})
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setArrow
+   console.log(formState);
     
   }
-
-
-
-
 
 
   return (
@@ -139,7 +137,7 @@ function ContactInfo() {
                   <input
                     className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-sm"
                     {...input}
-                    value={values[inputs.name]}
+                    value={formState[input.name]}
                     onChange={onChange}
                   />
                 </div>

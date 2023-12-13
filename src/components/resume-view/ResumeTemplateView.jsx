@@ -1,25 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import UsePdfConverter from "../pdfConverterCHook/UsePdfConverter";
+
 
 function ResumeTemplateView() {
+  const { componentRef} = UsePdfConverter();
   const [storedData, setStoredData] = useState({});
+
+  const resumeContentRef = useRef(null);
 
   const getDataFromLocalStorage = () => {
     const data = JSON.parse(localStorage.getItem("myAppState")) || {};
     setStoredData(data);
-    console.log(data)
   };
 
   useEffect(() => {
     getDataFromLocalStorage();
   }, []);
 
+  // Ensure the ref is assigned to the resume content
+  useEffect(() => {
+    componentRef.current = resumeContentRef.current;
+  }, [resumeContentRef, componentRef]);
+
+
   return (
-    <div className="mx-5 my-3 flex flex-col gap-2 ">
+    <div className="mx-5 my-3 flex flex-col gap-2 " ref={resumeContentRef}>
       {/* header */}
       <div>
         <h1 className="text-xl text-center capitalize">
           {storedData.firstName} {storedData.lastName}
         </h1>
+
         <h3 className="text-[14px] text-center">
           {storedData.address} | {storedData.conPhoneNumber} |{" "}
           {storedData.conEmail} | {storedData.linkedin} | {storedData.website}
@@ -82,11 +93,6 @@ function ResumeTemplateView() {
           <p className="text-xs">{storedData.companyDescription}</p>
           <div className="mt-1">
             <h4 className="font-semibold text-sm">{storedData.position}</h4>
-            <ul className="text-xs ml-5">
-              <li>lorem lorem</li>
-              <li>lorem lorem</li>
-              <li>lorem lorem</li>
-            </ul>
           </div>
         </div>
         {/* ))} */}

@@ -6,7 +6,7 @@ import { InputValueContext } from "../App";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
 function Skills() {
-  const { values, setValues } = useContext(InputValueContext);
+  const { formState, dispatch } = useContext(InputValueContext);
   const [input, setInput] = useState("")
   const [add, setAdd] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -52,7 +52,11 @@ function Skills() {
         .map((skill) => skill.trim());
 
       setTagSkills([...tagSkills, ...newSkills]);
-      setValues({ ...values, skills: tagSkills });
+        dispatch({
+          type: "SUMBIT__SUCCESS",
+          payload: [...formState.skills, tagSkills],
+          field: "skills",
+        });
     }
 
     setInput("");
@@ -83,12 +87,12 @@ function Skills() {
     localStorage.setItem("myAppState", JSON.stringify(updatedSkills));
   };
 
-  useEffect(() => {
-    const storedSkills = localStorage.getItem("myAppState");
-    if (storedSkills) {
-      setValues(JSON.parse(storedSkills));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedSkills = localStorage.getItem("myAppState");
+  //   if (storedSkills) {
+  //     setValues(JSON.parse(storedSkills));
+  //   }
+  // }, []);
 
 
   return (

@@ -5,15 +5,19 @@ import { InputValueContext } from "../App";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
 function Experience() {
- const { values, setValues } = useContext(InputValueContext);
+ const { formState, dispatch } = useContext(InputValueContext);
  const [add, setAdd] = useState(false);
  const [showForm, setShowForm] = useState(false);
  const [arrow, setArrow] = useState(false);
 
   const onChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+    // setValues({...values, [e.target.name]: e.target.value})
+    dispatch({
+      type: "SUMBIT__SUCCESS",
+      payload: e.target.value,
+      field: e.target.name,
+    });
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
      setAdd(false);
@@ -130,7 +134,7 @@ function Experience() {
                   <input
                     className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 foxus:border focus:border-black placeholder:text-sm"
                     {...input}
-                    value={values[inputs.name]}
+                    value={formState[inputs.name]}
                     onChange={onChange}
                   />
                 </div>
@@ -149,7 +153,7 @@ function Experience() {
                     <input
                       className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-sm"
                       {...item}
-                      value={values[item.name]}
+                      value={formState[item.name]}
                       onChange={onChange}
                     />
                   </div>
@@ -168,7 +172,7 @@ function Experience() {
                     <input
                       className="border border-gray-300 placeholder:text-gray-400 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-xm"
                       {...item}
-                      value={values[item.name]}
+                      value={formState[item.name]}
                       onChange={onChange}
                     />
                   </div>

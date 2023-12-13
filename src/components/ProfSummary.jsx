@@ -1,67 +1,58 @@
-import { IoIosArrowDropup } from "react-icons/io";
-import { IoIosArrowDropdown } from "react-icons/io";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { InputValueContext } from "../App";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import { IoIosArrowDropup, IoIosArrowDropdown } from "react-icons/io";
 
 function ProfSummary() {
-const { values, setValues } = useContext(InputValueContext);
-const [input, setInput] = useState("");
-const [add, setAdd] = useState(false);
-const [showForm, setShowForm] = useState(false);
-const [arrow, setArrow] = useState(false);
-const [tagSummary, setTagSummary] = useState([]);
+  const { formState, dispatch } = useContext(InputValueContext);
+  const [input, setInput] = useState("");
+  const [add, setAdd] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [arrow, setArrow] = useState(false);
 
-const onChange = (e) => {
-  // setValues({ ...values, [e.target.name]: e.target.value });
-  setInput(e.target.value);
-};
+  const onChange = (e) => {
+    const updatedProfileSummary = e.target.value;
+    dispatch({
+      type: "SUMBIT__SUCCESS",
+      payload: updatedProfileSummary,
+      field: "profileSummary",
+    });
+  };
 
-const handleSubmit = (e) => {
-  e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const summaryInput = input;
 
-  const summaryInput = input;
+    if (typeof summaryInput === "string") {
+      const newSummary = summaryInput
+        .trim()
+        .split(",")
+        .map((summary) => summary.trim());
 
-  if (typeof summaryInput === "string") {
-    const newSummary = summaryInput
-      .trim()
-      .split(",")
-      .map((interest) => interest.trim());
+      dispatch({
+        type: "SUMBIT__SUCCESS",
+        payload: [...formState.profileSummary, ...newSummary],
+        field: "profileSummary",
+      });
+    }
 
-    setTagSummary([...tagSummary, ...newSummary]);
-    console.log(input);
-    console.log(tagSummary);
-    setValues({ ...values, profileSummary: tagSummary });
-  }
-
-  setInput("");
-  setAdd(false);
-  setShowForm(showForm);
-};
+    setInput("");
+    setAdd(false);
+    console.log(formState)
+    setShowForm(false);
+  };
 
   const handleClose = () => {
     setShowForm(!showForm);
     setArrow(!arrow);
-    setAdd(add);
+    setAdd(false);
   };
-  
+
   const handleAdd = () => {
     setArrow(!arrow);
     setAdd(!add);
+    setShowForm(true);
   };
-  const handleform = () => {
-    setShowForm(!showForm);
-    setAdd(!add);
-  };
-
-  
-  useEffect(() => {
-    const storeInterest = localStorage.getItem("myAppState");
-    if (storeInterest) {
-      setValues(JSON.parse(storeInterest));
-    }
-  }, []);
-
 
   return (
     <div>
@@ -81,7 +72,7 @@ const handleSubmit = (e) => {
 
         {add && (
           <div className="p-5 border border-gray-300">
-            <button onClick={handleform} className="flex items-center gap-2">
+            <button onClick={handleAdd} className="flex items-center gap-2">
               <AiOutlinePlusCircle className="text-xl" />
               <h3>Add Profile Summary</h3>
             </button>
@@ -96,19 +87,18 @@ const handleSubmit = (e) => {
             <div className="flex flex-col">
               <label
                 className="text-gray-500 font-semibold text-sm mb-1"
-                htmlFor="title"
+                htmlFor="profileSummary"
               >
                 Summary
               </label>
               <textarea
-                className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-sm"
-                name="profleSummary"
+                className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border focus:border-black placeholder:text-sm"
+                name="profileSummary"
                 value={input}
-                onChange={onChange}
+                onChange={(e) => setInput(e.target.value)}
                 cols="20"
                 rows="8"
               ></textarea>
-             
             </div>
 
             <div className="flex justify-end items-end gap-2">

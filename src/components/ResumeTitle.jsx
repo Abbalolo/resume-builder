@@ -4,26 +4,33 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { IoIosArrowDropup, IoIosArrowDropdown } from "react-icons/io";
 
 function ResumeTitle() {
-  const { values, setValues } = useContext(InputValueContext);
+  const { formState, dispatch } = useContext(InputValueContext);
   const [add, setAdd] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [arrow, setArrow] = useState(false);
 
 
-  const onChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
+ const onChange = (e) => {
+   // setValues({...values, [e.target.name]: e.target.value})
+   dispatch({
+     type: "SUMBIT__SUCCESS",
+     payload: e.target.value,
+     field: e.target.name,
+   });
+ };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setAdd(false);
     setShowForm(showForm);
+
   };
 
   const handleClose = () => {
     setShowForm(!showForm);
     setArrow(!arrow);
     setAdd(add);
+  
   };
   const handleAdd = () => {
     setArrow(!arrow)
@@ -73,7 +80,7 @@ function ResumeTitle() {
                 className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-sm"
                 type="text"
                 name="title"
-                value={values.title}
+                value={formState.name}
                 onChange={onChange}
               />
             </div>

@@ -6,7 +6,7 @@ import { InputValueContext } from "../App";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
 function Interest() {
-  const { values, setValues } = useContext(InputValueContext);
+  const { formState, dispatch } = useContext(InputValueContext);
   const [input, setInput] = useState("");
   const [add, setAdd] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -22,18 +22,16 @@ function Interest() {
     e.preventDefault();
 
     const interestInput = input;
-
-    if (typeof interestInput === "string") {
       const newSkills = interestInput
-        .trim()
         .split(",")
-        .map((interest) => interest.trim());
+      .map((interest) => interest.trim());
+    setTagInterest([ ...tagInterest, ...newSkills ]);
+       dispatch({
+         type: "SUMBIT__SUCCESS",
+         payload: [...formState.interest, ...newSkills],
+         field: "interest",
+       });
 
-      setTagInterest([...tagInterest, ...newSkills]);
-      console.log(input);
-      console.log(tagInterest);
-      setValues({ ...values, interest: tagInterest });
-    }
 
     setInput("");
     setAdd(false);
@@ -66,12 +64,12 @@ function Interest() {
     localStorage.setItem("myAppState", JSON.stringify(updateInterest));
   };
 
-  useEffect(() => {
-    const storeInterest = localStorage.getItem("myAppState");
-    if (storeInterest) {
-      setValues(JSON.parse(storeInterest));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storeInterest = localStorage.getItem("myAppState");
+  //   if (storeInterest) {
+  //     setValues(JSON.parse(storeInterest));
+  //   }
+  // }, []);
 
   return (
     <div>
