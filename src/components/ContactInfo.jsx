@@ -1,6 +1,6 @@
 import { IoIosArrowDropup } from "react-icons/io"; 
 import { IoIosArrowDropdown } from "react-icons/io"; 
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { InputValueContext } from "../App";
 
 function ContactInfo() {
@@ -103,9 +103,14 @@ function ContactInfo() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-   console.log(formState);
+
     
   }
+
+   useEffect(() => {
+     console.log(formState);
+   }, [formState]); 
+ 
 
 
   return (

@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Resume from "./pages/Resume";
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useEffect } from "react";
 import useLocalStorageState from "./components/useLocalStorage/UseLocalStorage"; // Import the custom hook
 import ConvertToPdf from "./components/convertToPdf/ConvertToPdf";
 import { UserInfoReducer } from "./components/reducers/UserInfo";
@@ -9,26 +9,6 @@ const InputValueContext = createContext();
 
 function App() {
   // Use the custom hook to manage state and store it in local storage
-//  const [values, setValues] = useLocalStorageState("myAppState", {
-//      firstName: "",
-//      lastName: "",
-//      email: "",
-//      phoneNumber: "",
-//      linkedin: "",
-//      twitter: "",
-//      address: "",
-//      city: "",
-//      state: "",
-//      website: "",
-//    skills: [],
-//    interest: [],
-//    title: [],
-//    profileSummary: [],
-//    educationAdditionalInfo: [],
-//    ProjectAdditionalInfo: [],
-//    volunteerAdditionalInfo: [],
-//  });
-  
   const [formState, dispatch] = useReducer(UserInfoReducer, {
     skills: [],
     interest: [],
@@ -39,6 +19,18 @@ function App() {
     volunteerAdditionalInfo: [],
   });
 
+  // Retrieve data from local storage when the component mounts
+  useEffect(() => {
+    const storedFormState = JSON.parse(localStorage.getItem("formState"));
+    if (storedFormState) {
+      dispatch({ type: "SET_STATE", payload: storedFormState });
+    }
+  }, []);
+
+  // Save data to local storage whenever the formState changes
+  useEffect(() => {
+    localStorage.setItem("formState", JSON.stringify(formState));
+  }, [formState]);
 
   return (
     <InputValueContext.Provider value={{ formState, dispatch }}>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { InputValueContext } from "../App";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { IoIosArrowDropup, IoIosArrowDropdown } from "react-icons/io";
@@ -29,18 +29,26 @@ function ProfSummary() {
         .split(",")
         .map((summary) => summary.trim());
 
+      const updatedProfileSummary = [
+        ...formState.profileSummary,
+        ...newSummary,
+      ];
+
       dispatch({
         type: "SUMBIT__SUCCESS",
-        payload: [...formState.profileSummary, ...newSummary],
+        payload: updatedProfileSummary,
         field: "profileSummary",
       });
+      
     }
 
     setInput("");
     setAdd(false);
-    console.log(formState)
     setShowForm(false);
   };
+
+
+
 
   const handleClose = () => {
     setShowForm(!showForm);
@@ -53,6 +61,10 @@ function ProfSummary() {
     setAdd(!add);
     setShowForm(true);
   };
+
+  useEffect(() => {
+  console.log(formState)
+})
 
   return (
     <div>

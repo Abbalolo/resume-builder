@@ -9,7 +9,7 @@ function ResumeTemplateView() {
   const resumeContentRef = useRef(null);
 
   const getDataFromLocalStorage = () => {
-    const data = JSON.parse(localStorage.getItem("myAppState")) || {};
+    const data = JSON.parse(localStorage.getItem("formState")) || {};
     setStoredData(data);
   };
 
@@ -49,19 +49,19 @@ function ResumeTemplateView() {
       <div className="flex flex-col gap-1">
         <h3 className="text-[16px]">Education</h3>
         <hr />
-        {/* {storedData.education.map((item, index) => ( */}
-        <div>
-          <div className="flex justify-between">
-            <h4 className="font-semibold text-sm">
-              {storedData.educationInstitution}
-            </h4>
-            <h5 className="font-semibold text-sm">
-              {storedData.eduStartDate} {storedData.eduEndDate}
-            </h5>
+        {storedData.education.map((item, index) => (
+          <div key={index}>
+            <div className="flex justify-between">
+              <h4 className="font-semibold text-sm">
+                {item.educationInstitution}
+              </h4>
+              <h5 className="font-semibold text-sm">
+                {item.eduStartDate} {item.eduEndDate}
+              </h5>
+            </div>
+            <p className="text-xs">{item.gPA}</p>
           </div>
-          <p className="text-xs">{storedData.gPA}</p>
-        </div>
-        {/* ))} */}
+        ))}
       </div>
 
       {/* skills and interest section */}
