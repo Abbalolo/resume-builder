@@ -11,12 +11,14 @@ function ProfSummary() {
   const [arrow, setArrow] = useState(false);
 
   const onChange = (e) => {
-    const updatedProfileSummary = e.target.value;
-    dispatch({
-      type: "SUMBIT__SUCCESS",
-      payload: updatedProfileSummary,
-      field: "profileSummary",
-    });
+     const { name, value } = e.target;
+     dispatch({
+       type: "SET_STATE",
+       payload: {
+         ...formState,
+         ...formState.profileSummary, [name]: value ,
+       },
+     });
   };
 
   const handleSubmit = (e) => {
@@ -107,7 +109,7 @@ function ProfSummary() {
                 className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border focus:border-black placeholder:text-sm"
                 name="profileSummary"
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
+                onChange={onChange}
                 cols="20"
                 rows="8"
               ></textarea>

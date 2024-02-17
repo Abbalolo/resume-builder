@@ -1,20 +1,26 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import UsePdfConverter from "../pdfConverterCHook/UsePdfConverter";
+import { InputValueContext } from "../../App";
 
 
 function ResumeTemplateView() {
-  const { componentRef} = UsePdfConverter();
+  const { componentRef } = UsePdfConverter();
+    
+  const { formState } = useContext(InputValueContext);
   const [storedData, setStoredData] = useState({});
 
+  
   const resumeContentRef = useRef(null);
 
   const getDataFromLocalStorage = () => {
     const data = JSON.parse(localStorage.getItem("formState")) || {};
     setStoredData(data);
+    console.log({data: storedData})
   };
 
   useEffect(() => {
-    getDataFromLocalStorage();
+    getDataFromLocalStorage(); 
+    console.log({formState});
   }, []);
 
   // Ensure the ref is assigned to the resume content
@@ -49,7 +55,7 @@ function ResumeTemplateView() {
       <div className="flex flex-col gap-1">
         <h3 className="text-[16px]">Education</h3>
         <hr />
-        {storedData.education.map((item, index) => (
+        {/* {storedData.education.map((item, index) => (
           <div key={index}>
             <div className="flex justify-between">
               <h4 className="font-semibold text-sm">
@@ -61,7 +67,7 @@ function ResumeTemplateView() {
             </div>
             <p className="text-xs">{item.gPA}</p>
           </div>
-        ))}
+        ))} */}
       </div>
 
       {/* skills and interest section */}
@@ -124,3 +130,4 @@ function ResumeTemplateView() {
 }
 
 export default ResumeTemplateView;
+3

@@ -1,15 +1,36 @@
+import React, { createContext, useReducer, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Resume from "./pages/Resume";
-import React, { createContext, useReducer, useEffect } from "react";
-import useLocalStorageState from "./components/useLocalStorage/UseLocalStorage"; // Import the custom hook
 import ConvertToPdf from "./components/convertToPdf/ConvertToPdf";
-import { UserInfoReducer } from "./components/reducers/UserInfo";
 
+// Create a context for managing input values
 const InputValueContext = createContext();
+
+// Define the reducer function
+const formReducer = (state, action) => {
+  switch (action.type) {
+    case "SET_STATE":
+      return action.payload;
+    default:
+      return state;
+  }
+};
 
 function App() {
   // Use the custom hook to manage state and store it in local storage
-  const [formState, dispatch] = useReducer(UserInfoReducer, {
+  const [formState, dispatch] = useReducer(formReducer, {
+    contact: {
+      firstName: "",
+      lastName: "",
+      conEmail: "",
+      conPhoneNumber: "",
+      linkedin: "",
+      twitter: "",
+      address: "",
+      conCity: "",
+      state: "",
+      website: "",
+    },
     skills: [],
     interest: [],
     title: [],

@@ -10,15 +10,16 @@ function ResumeTitle() {
   const [arrow, setArrow] = useState(false);
 
 
- const onChange = (e) => {
-   // setValues({...values, [e.target.name]: e.target.value})
-   dispatch({
-     type: "SUMBIT__SUCCESS",
-     payload: e.target.value,
-     field: e.target.name,
-   });
- };
-
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    dispatch({
+      type: "SET_STATE",
+      payload: {
+        ...formState,
+        ...formState.title, [name]: value ,
+      },
+    });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     setAdd(false);
