@@ -10,15 +10,16 @@ function ProfSummary() {
   const [showForm, setShowForm] = useState(false);
   const [arrow, setArrow] = useState(false);
 
+  
   const onChange = (e) => {
-     const { name, value } = e.target;
-     dispatch({
-       type: "SET_STATE",
-       payload: {
-        profileSummary: { ...formState,
-         ...formState.profileSummary, [name]: value },
-       },
-     });
+    const { name, value } = e.target;
+    dispatch({
+      type: "SET_STATE",
+      payload: {
+        ...formState,
+        profileSummary: value,
+      },
+    });
   };
 
   const handleSubmit = (e) => {
@@ -87,7 +88,7 @@ function ProfSummary() {
               <textarea
                 className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border focus:border-black placeholder:text-sm"
                 name="profileSummary"
-                value={formState[input.name]}
+                 value={formState.profileSummary} 
                 onChange={onChange}
                 cols="20"
                 rows="8"
