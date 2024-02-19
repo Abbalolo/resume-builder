@@ -5,14 +5,23 @@ import { InputValueContext } from "../App";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
 function Publications() {
- const { values, setValues } = useContext(InputValueContext);
+  const { formState, dispatch } = useContext(InputValueContext);
  const [add, setAdd] = useState(false);
  const [showForm, setShowForm] = useState(false);
  const [arrow, setArrow] = useState(false);
 
- const onChange = (e) => {
-   setValues({ ...values, [e.target.name]: e.target.value });
- };
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    dispatch({
+      type: "SET_STATE",
+      payload: {
+        publication:{...formState,
+        ...formState.publication,
+        [name]: value},
+      },
+    });
+  };
+
 
  const handleSubmit = (e) => {
    e.preventDefault();
@@ -38,21 +47,21 @@ function Publications() {
  const inputs = [
    {
      id: 1,
-     name: "Publication",
+     name: "public",
      type: "text",
      label: "Publication",
      required: true,
    },
    {
      id: 3,
-     name: "Pub Start Date",
+     name: "pdateStart",
      type: "date",
      label: "Start Date",
      required: true,
    },
    {
      id: 4,
-     name: "Pub End Date",
+     name: "pdateEnd",
      type: "date",
      label: "End Date",
      required: true,
@@ -100,7 +109,7 @@ function Publications() {
                     <input
                       className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-sm"
                       {...item}
-                      value={values[item.name]}
+                      value={formState[inputs.name]}
                       onChange={onChange}
                     />
                   </div>
@@ -119,7 +128,7 @@ function Publications() {
                     <input
                       className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-sm"
                       {...item}
-                      value={values[item.name]}
+                      value={formState[inputs.name]}
                       onChange={onChange}
                     />
                   </div>

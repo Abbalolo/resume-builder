@@ -4,73 +4,79 @@ import React, { useContext, useState } from "react";
 import { InputValueContext } from "../App";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 function Projects() {
- const { values, setValues } = useContext(InputValueContext);
- const [add, setAdd] = useState(false);
- const [showForm, setShowForm] = useState(false);
- const [arrow, setArrow] = useState(false);
+  const { formState, dispatch } = useContext(InputValueContext);
+  const [add, setAdd] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [arrow, setArrow] = useState(false);
 
- const onChange = (e) => {
-   setValues({ ...values, [e.target.name]: e.target.value });
- };
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    dispatch({
+      type: "SET_STATE",
+      payload: {
+        ...formState,
+        project: { ...formState.project, [name]: value },
+      },
+    });
+  };
 
- const handleSubmit = (e) => {
-   e.preventDefault();
-   setAdd(false);
-   setShowForm(showForm);
- };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setAdd(false);
+    setShowForm(showForm);
+  };
 
- const handleClose = () => {
-   setShowForm(!showForm);
-   setArrow(!arrow);
-   setAdd(add);
- };
+  const handleClose = () => {
+    setShowForm(!showForm);
+    setArrow(!arrow);
+    setAdd(add);
+  };
 
- const handleAdd = () => {
-   setArrow(!arrow);
-   setAdd(!add);
- };
- const handleform = () => {
-   setShowForm(!showForm);
-   setAdd(!add);
- };
+  const handleAdd = () => {
+    setArrow(!arrow);
+    setAdd(!add);
+  };
+  const handleform = () => {
+    setShowForm(!showForm);
+    setAdd(!add);
+  };
 
-
-      const inputs = [
-        {
-          id: 1,
-          name: "Project Name",
-          type: "text",
-          label: "Project Name",
-          required: true,
-        },
-        {
-          id: 2,
-          name: "Pro Organisation",
-          type: "text",
-          label: "Oganisation",
-          required: true,
-        },
-        {
-          id: 3,
-          name: "Pro Start Date",
-          type: "date",
-          label: "Start Date",
-          required: true,
-        },
-        {
-          id: 4,
-          name: "Pro End Date",
-          type: "date",
-          label: "End Date",
-          required: true,
-        },
-        {
-          id: 5,
-          name: "Pro Additional Information",
-          type: "text",
-          label: "Additional Information",
-        },
-      ];
+  const inputs = [
+    {
+      id: 1,
+      name: "projectName",
+      type: "text",
+      label: "Project Name",
+      required: true,
+    },
+    {
+      id: 2,
+      name: "proorganisation",
+      type: "text",
+      label: "Organisation",
+      required: true,
+    },
+    {
+      id: 3,
+      name: "prodateStart",
+      type: "date",
+      label: "Start Date",
+      required: true,
+    },
+    {
+      id: 4,
+      name: "prodateEnd",
+      type: "date",
+      label: "End Date",
+      required: true,
+    },
+    {
+      id: 5,
+      name: "proAdditionalInformation",
+      type: "text",
+      label: "Additional Information",
+    },
+  ];
   return (
     <div>
       <div>
@@ -102,11 +108,7 @@ function Projects() {
             <div className="grid grid-cols-2 gap-4">
               {inputs.slice(0, 4) &&
                 inputs.slice(0, 4).map((item) => (
-                  <div
-                    key={item.id}
-                  
-                    className="flex flex-col w-full "
-                  >
+                  <div key={item.id} className="flex flex-col w-full ">
                     <label
                       className="text-gray-500 font-semibold text-sm mb-1"
                       htmlFor="firstname"
@@ -116,7 +118,7 @@ function Projects() {
                     <input
                       className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-sm"
                       {...item}
-                      value={values[item.name]}
+                      value={formState[inputs.name]}
                       onChange={onChange}
                     />
                   </div>
@@ -136,7 +138,7 @@ function Projects() {
                     <textarea
                       className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-sm"
                       name="ProjectAdditionalInfo"
-                      value={values[item.name]}
+                      value={formState[inputs.name]}
                       onChange={onChange}
                       cols="20"
                       rows="8"

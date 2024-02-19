@@ -5,14 +5,25 @@ import { InputValueContext } from "../App";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
 function Certification() {
-     const { values, setValues } = useContext(InputValueContext);
+   const { formState, dispatch } = useContext(InputValueContext);
      const [add, setAdd] = useState(false);
      const [showForm, setShowForm] = useState(false);
      const [arrow, setArrow] = useState(false);
 
      const onChange = (e) => {
-       setValues({ ...values, [e.target.name]: e.target.value });
+       const { name, value } = e.target;
+       dispatch({
+         type: "SET_STATE",
+         payload: {
+           certification: {
+             ...formState,
+             ...formState.certification,
+             [name]: value,
+           },
+         },
+       });
      };
+
 
      const handleSubmit = (e) => {
        e.preventDefault();
@@ -38,32 +49,32 @@ function Certification() {
     const inputs = [
       {
         id: 1,
-        name: "Cert Company Name",
+        name: "certcompanyName",
         type: "text",
         label: "Company Name",
-        required: true,
+        
       },
       {
         id: 2,
-        name: "Cert Provider",
+        name: "certProvider",
         type: "text",
         label: "Provider",
-        required: true,
+        
       },
       {
         id: 3,
-        name: "Cert Start Date",
+        name: "certStartDate",
         type: "date",
         label: "Start Date",
-        required: true,
+        
       },
 
       {
         id: 4,
-        name: "Cert End Date",
+        name: "certEndDate",
         type: "date",
         label: "End Date",
-        required: true,
+        
       },
     ];
 
@@ -107,7 +118,7 @@ function Certification() {
                   <input
                     className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-sm"
                     {...item}
-                    value={values[item.name]}
+                    value={formState[inputs.name]}
                     onChange={onChange}
                   />
                 </div>

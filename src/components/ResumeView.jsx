@@ -18,9 +18,9 @@ function ResumeView() {
   return (
     <section className="mt-[76px]">
       <InfoHeader />
-      <div className="flex items-center justify-center">
+      <div className="flex flex-col md:flex-row items-center justify-center">
         {/* left */}
-        <div className="left w-3/6  h-screen">
+        <div className="left md:w-3/6 w-full  md:h-screen h-full ">
           <ContactInfo />
           <ResumeTitle />
           <ProfSummary />
@@ -36,7 +36,7 @@ function ResumeView() {
         </div>
 
         {/* right */}
-        <div className="right w-3/6 h-screen ">
+        <div className=" md:w-3/6 w-full md:h-screen h-full ">
           <h2 className="border border-gray-300 text-lg p-[20px]">Preview</h2>
           <p className='leading-4 p-3'>
             Edit and select the information on the left to add content to your

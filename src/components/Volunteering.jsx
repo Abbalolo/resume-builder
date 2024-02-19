@@ -5,14 +5,22 @@ import { InputValueContext } from "../App";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
 function Volunteering() {
-   const { values, setValues } = useContext(InputValueContext);
+    const { formState, dispatch } = useContext(InputValueContext);
    const [add, setAdd] = useState(false);
    const [showForm, setShowForm] = useState(false);
    const [arrow, setArrow] = useState(false);
 
-   const onChange = (e) => {
-     setValues({ ...values, [e.target.name]: e.target.value });
-   };
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    dispatch({
+      type: "SET_STATE",
+      payload: {
+        ...formState,
+        volunteer: { ...formState.volunteer, [name]: value },
+      },
+    });
+  };
+
 
    const handleSubmit = (e) => {
      e.preventDefault();
@@ -38,49 +46,49 @@ function Volunteering() {
    const inputs = [
      {
        id: 1,
-       name: "Vol Organisation",
+       name: "vorganisation",
        type: "text",
-       label: "Oganisation",
+       label: "Organisation",
        required: true,
      },
      {
        id: 2,
-       name: "Involvement",
+       name: "vinvolvement",
        type: "text",
        label: "Involvement",
        required: true,
      },
      {
        id: 3,
-       name: "Vol City",
+       name: "vcity",
        type: "text",
        label: "City",
        required: true,
      },
      {
        id: 4,
-       name: "Vol State",
+       name: "vstate",
        type: "text",
        label: "State",
        required: true,
      },
      {
        id: 5,
-       name: "Vol Start Date",
+       name: "vdateStart",
        type: "date",
        label: "Start Date",
        required: true,
      },
      {
        id: 6,
-       name: "Vol End Date",
+       name: "vdateEnd",
        type: "date",
        label: "End Date",
        required: true,
      },
      {
        id: 7,
-       name: "Vol Additional Information",
+       name: "volAdditionalInformation",
        type: "text",
        label: "Additional Information",
      },
@@ -129,7 +137,7 @@ function Volunteering() {
                     <input
                       className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-sm"
                       {...item}
-                      value={values[item.name]}
+                      value={formState[inputs.name]}
                       onChange={onChange}
                     />
                   </div>
@@ -149,7 +157,7 @@ function Volunteering() {
                     <textarea
                       className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-sm"
                       name="volunteerAdditionalInfo"
-                      value={values[item.name]}
+                      value={formState[inputs.name]}
                       onChange={onChange}
                       cols="20"
                       rows="8"

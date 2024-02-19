@@ -5,13 +5,21 @@ import { InputValueContext } from "../App";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
 function Awards() {
-      const { values, setValues } = useContext(InputValueContext);
+      const { formState, dispatch } = useContext(InputValueContext);
       const [add, setAdd] = useState(false);
       const [showForm, setShowForm] = useState(false);
       const [arrow, setArrow] = useState(false);
 
       const onChange = (e) => {
-        setValues({ ...values, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        dispatch({
+          type: "SET_STATE",
+          payload: {
+           award: {...formState,
+            ...formState.award,
+            [name]: value},
+          },
+        });
       };
 
       const handleSubmit = (e) => {
@@ -38,14 +46,14 @@ function Awards() {
       const inputs = [
         {
           id: 1,
-          name: "Award or Scholarship",
+          name: "AwardorScholarship",
           type: "text",
           label: "Award or Scholarship",
           required: true,
         },
         {
           id: 2,
-          name: "Awa Start Date",
+          name: "adateStart",
           type: "date",
           label: "Start Date",
           required: true,
@@ -53,7 +61,7 @@ function Awards() {
 
         {
           id: 3,
-          name: "Awa End Date",
+          name: "adateEnd",
           type: "date",
           label: "End Date",
           required: true,
@@ -101,7 +109,7 @@ function Awards() {
                     <input
                       className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-sm"
                       {...item}
-                      value={values[item.name]}
+                      value={formState[inputs.name]}
                       onChange={onChange}
                     />
                   </div>
@@ -120,7 +128,7 @@ function Awards() {
                     <input
                       className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-sm"
                       {...item}
-                      value={values[item.name]}
+                      value={formState[inputs.name]}
                       onChange={onChange}
                     />
                   </div>

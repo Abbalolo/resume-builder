@@ -15,36 +15,15 @@ function ProfSummary() {
      dispatch({
        type: "SET_STATE",
        payload: {
-         ...formState,
-         ...formState.profileSummary, [name]: value ,
+        profileSummary: { ...formState,
+         ...formState.profileSummary, [name]: value },
        },
      });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const summaryInput = input;
 
-    if (typeof summaryInput === "string") {
-      const newSummary = summaryInput
-        .trim()
-        .split(",")
-        .map((summary) => summary.trim());
-
-      const updatedProfileSummary = [
-        ...formState.profileSummary,
-        ...newSummary,
-      ];
-
-      dispatch({
-        type: "SUMBIT__SUCCESS",
-        payload: updatedProfileSummary,
-        field: "profileSummary",
-      });
-      
-    }
-
-    setInput("");
     setAdd(false);
     setShowForm(false);
   };
@@ -108,7 +87,7 @@ function ProfSummary() {
               <textarea
                 className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border focus:border-black placeholder:text-sm"
                 name="profileSummary"
-                value={input}
+                value={formState[input.name]}
                 onChange={onChange}
                 cols="20"
                 rows="8"

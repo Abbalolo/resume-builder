@@ -10,14 +10,19 @@ function Education() {
      const [showForm, setShowForm] = useState(false);
      const [arrow, setArrow] = useState(false);
 
-     const onChange = (e) => {
-       // setValues({...values, [e.target.name]: e.target.value})
-       dispatch({
-         type: "SUMBIT__SUCCESS",
-         payload: e.target.value,
-         field: e.target.name,
-       });
-     };
+    const onChange = (e) => {
+      const { name, value } = e.target;
+      dispatch({
+        type: "SET_STATE",
+        payload: {
+          ...formState,
+          education: {
+            ...formState.education,
+            [name]: value,
+          },
+        }
+      });
+    };
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -59,21 +64,21 @@ function Education() {
        },
        {
          id: 3,
-         name: "gPA",
+         name: "edugpa",
          type: "text",
          label: "GPA",
          required: true,
        },
        {
          id: 4,
-         name: "degree",
+         name: "edudegree",
          type: "text",
          label: "Degree",
          required: true,
        },
        {
          id: 5,
-         name: "fieldofStudy",
+         name: "edufieldofStudy",
          type: "text",
          label: "Field of Study",
          required: true,
@@ -159,7 +164,7 @@ function Education() {
                     <input
                       className="border border-gray-300 placeholder:text-gray-400 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-xm"
                       {...item}
-                      value={formState[item.name]}
+                      value={formState[inputs.name]}
                       onChange={onChange}
                     />
                   </div>
@@ -178,7 +183,7 @@ function Education() {
                     <textarea
                       className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-sm"
                       name="educationAdditionalInfo"
-                      value={formState[item.name]}
+                      value={formState[inputs.name]}
                       onChange={onChange}
                       cols="20"
                       rows="8"

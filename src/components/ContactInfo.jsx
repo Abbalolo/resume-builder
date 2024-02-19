@@ -12,7 +12,7 @@ function ContactInfo() {
   const inputs = [
     {
       id: 1,
-      name: "firstName",
+      name: "cfirstName",
       type: "text",
      
       label: "First Name",
@@ -20,7 +20,7 @@ function ContactInfo() {
     },
     {
       id: 2,
-      name: "lastName",
+      name: "clastName",
       type: "text",
      
       label: "Last Name",
@@ -44,15 +44,15 @@ function ContactInfo() {
     },
     {
       id: 5,
-      name: "linkedin",
+      name: "clinkedin",
       type: "text",
-   
+
       label: "Enter Linkedin",
       
     },
     {
       id: 6,
-      name: "twitter",
+      name: "ctwitter",
       type: "text",
    
       label: "Twitter",
@@ -60,7 +60,7 @@ function ContactInfo() {
     },
     {
       id: 7,
-      name: "address",
+      name: "caddress",
       type: "text",
  
       label: "Address",
@@ -76,7 +76,7 @@ function ContactInfo() {
     },
     {
       id: 9,
-      name: "state",
+      name: "cstate",
 
       type: "text",
     
@@ -85,7 +85,7 @@ function ContactInfo() {
     },
     {
       id: 10,
-      name: "website",
+      name: "cwebsite",
       type: "text",
   
       label: "Website",
@@ -115,10 +115,6 @@ function ContactInfo() {
 
   }
 
-   useEffect(() => {
-     console.log(formState);
-   }, [formState]); 
- 
 
 
   return (

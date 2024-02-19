@@ -13,6 +13,20 @@ function Interest() {
   const [arrow, setArrow] = useState(false);
   const [tagInterest, setTagInterest] = useState([]);
 
+//  const onChange = (e) => {
+//    const { name, value } = e.target;
+//    dispatch({
+//      type: "SET_STATE",
+//      payload: {
+//        ...formState,
+//        ...formState.interest,
+//        [name]: value,
+//      },
+//    });
+//    setInput(e.target.value);
+//  };
+
+
   const onChange = (e) => {
     // setValues({ ...values, [e.target.name]: e.target.value });
     setInput(e.target.value);
@@ -27,8 +41,8 @@ function Interest() {
       .map((interest) => interest.trim());
     setTagInterest([ ...tagInterest, ...newSkills ]);
        dispatch({
-         type: "SUMBIT__SUCCESS",
-         payload: [...formState.interest, ...newSkills],
+         type: "SET_STATE",
+         payload: [...formState.interest, ...newSkills ],
          field: "interest",
        });
 
@@ -64,12 +78,7 @@ function Interest() {
     localStorage.setItem("myAppState", JSON.stringify(updateInterest));
   };
 
-  // useEffect(() => {
-  //   const storeInterest = localStorage.getItem("myAppState");
-  //   if (storeInterest) {
-  //     setValues(JSON.parse(storeInterest));
-  //   }
-  // }, []);
+ 
 
   return (
     <div>

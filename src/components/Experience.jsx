@@ -11,13 +11,16 @@ function Experience() {
  const [arrow, setArrow] = useState(false);
 
   const onChange = (e) => {
-    // setValues({...values, [e.target.name]: e.target.value})
+    const { name, value } = e.target;
     dispatch({
-      type: "SUMBIT__SUCCESS",
-      payload: e.target.value,
-      field: e.target.name,
+      type: "SET_STATE",
+      payload: {
+        ...formState,
+        experience: { ...formState.experience, [name]: value },
+      },
     });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
      setAdd(false);
@@ -43,35 +46,35 @@ function Experience() {
     const inputs = [
       {
         id: 1,
-        name: "companyName",
+        name: "excompanyName",
         type: "text",
         label: "Company Name",
         required: true,
       },
       {
         id: 2,
-        name: "companyDescription",
+        name: "excompanyDescription",
         type: "text",
         label: "Company Description",
         required: true,
       },
       {
         id: 3,
-        name: "position",
+        name: "exposition",
         type: "text",
         label: "Position",
         required: true,
       },
       {
         id: 4,
-        name: "expLocation",
+        name: "exlocation",
         type: "text",
         label: "Location",
         required: true,
       },
       {
         id: 5,
-        name: "type",
+        name: "extype",
         type: "text",
         label: "Type",
         required: true,
@@ -153,7 +156,7 @@ function Experience() {
                     <input
                       className="border border-gray-300 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-sm"
                       {...item}
-                      value={formState[item.name]}
+                      value={formState[inputs.name]}
                       onChange={onChange}
                     />
                   </div>
@@ -172,7 +175,7 @@ function Experience() {
                     <input
                       className="border border-gray-300 placeholder:text-gray-400 p-1 outline-none rounded-sm hover:border hover:border-red-200 focus:border  focus:border-black placeholder:text-xm"
                       {...item}
-                      value={formState[item.name]}
+                      value={formState[inputs.name]}
                       onChange={onChange}
                     />
                   </div>

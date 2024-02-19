@@ -2,6 +2,7 @@ import React, { createContext, useReducer, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Resume from "./pages/Resume";
 import ConvertToPdf from "./components/convertToPdf/ConvertToPdf";
+import Register from "./pages/auth/register";
 
 // Create a context for managing input values
 const InputValueContext = createContext();
@@ -20,24 +21,72 @@ function App() {
   // Use the custom hook to manage state and store it in local storage
   const [formState, dispatch] = useReducer(formReducer, {
     contact: {
-      firstName: "",
-      lastName: "",
+      cfirstName: "",
+      clastName: "",
       conEmail: "",
       conPhoneNumber: "",
-      linkedin: "",
-      twitter: "",
-      address: "",
+      clinkedin: "",
+      ctwitter: "",
+      caddress: "",
       conCity: "",
-      state: "",
-      website: "",
+      cstate: "",
+      cwebsite: "",
+    },
+    certification: {
+      certcompanyName: "",
+      certProvider: "",
+      certEndDate: "",
+      certStartDate: ""
+    },
+    award: {
+      AwardorScholarship: "",
+      adateStart: "",
+      adataEnd: "",
     },
     skills: [],
     interest: [],
     title: [],
     profileSummary: [],
-    educationAdditionalInfo: [],
-    ProjectAdditionalInfo: [],
-    volunteerAdditionalInfo: [],
+    experience: {
+      excompanyName: "",
+      exposition: "",
+      extype: "",
+      excompanyDescription: "",
+      exlocation: "",
+      expStartDate: "",
+      expEndDate: "",
+    },
+    education: {
+      educationInstitution: "",
+      eduLocation: "",
+      edugpa: "",
+      eduStartDate: "",
+      eduEndDate: "",
+      edudegree: "",
+      edufieldofStudy: "",
+      educationAdditionalInfo: [],
+    },
+    project: {
+      projectName: "",
+      proorganisation: "",
+      prodateStart: "",
+      prodataEnd: "",
+      proAdditionalInformation: [],
+    },
+    publication: {
+      public: "",
+      pdateStart: "",
+      pdataEnd: "",
+    },
+    volunteer: {
+      vorganisation: "",
+      vinvolvement: "",
+      vstate: "",
+      vcity: "",
+      vdateStart: "",
+      vdataEnd: "",
+      vvolAdditionalInformation: [],
+    },
   });
 
   // Retrieve data from local storage when the component mounts
@@ -57,8 +106,9 @@ function App() {
     <InputValueContext.Provider value={{ formState, dispatch }}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Resume />} />
+          <Route path="/myresume" element={<Resume />} />
           <Route path="/resumeView" element={<ConvertToPdf />} />
+          <Route path="/" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </InputValueContext.Provider>
