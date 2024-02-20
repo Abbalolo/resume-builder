@@ -1,10 +1,10 @@
 import { BiMenu } from "react-icons/bi";
 import { useEffect, useRef, useState } from "react";
-import UsePdfConverter from "../pdfConverterCHook/UsePdfConverter";
+import { usePdfConverter } from "../pdfContex/PdfApi";
 
 
 function InfoHeader() {
-  const { generatePDF } = UsePdfConverter();
+  const { generatePdf } = usePdfConverter();
   const [toggle, setToggle] = useState(false);
   const buttonRef = useRef(null);
   const listRef = useRef(null);
@@ -15,7 +15,7 @@ function InfoHeader() {
 
   const handleClose = async () => {
     setToggle(false);
-    await generatePDF(); // Wait for the PDF to be generated before continuing
+    await generatePdf(); // Wait for the PDF to be generated before continuing
     // Additional actions after PDF generation if needed
   };
 

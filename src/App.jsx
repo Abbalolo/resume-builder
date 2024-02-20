@@ -1,8 +1,8 @@
 import React, { createContext, useReducer, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Resume from "./pages/Resume";
-import ConvertToPdf from "./components/convertToPdf/ConvertToPdf";
 import Register from "./pages/auth/register";
+import { PdfConverterProvider } from "./components/pdfContex/PdfApi";
 
 // Create a context for managing input values
 const InputValueContext = createContext();
@@ -104,13 +104,14 @@ function App() {
 
   return (
     <InputValueContext.Provider value={{ formState, dispatch }}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/myresume" element={<Resume />} />
-          <Route path="/resumeView" element={<ConvertToPdf />} />
-          <Route path="/" element={<Register />} />
-        </Routes>
-      </BrowserRouter>
+      <PdfConverterProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/myresume" element={<Resume />} />
+            <Route path="/" element={<Register />} />
+          </Routes>
+        </BrowserRouter>
+      </PdfConverterProvider>
     </InputValueContext.Provider>
   );
 }

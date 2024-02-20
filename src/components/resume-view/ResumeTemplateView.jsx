@@ -1,49 +1,30 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import UsePdfConverter from "../pdfConverterCHook/UsePdfConverter";
+import React, { useContext, useState } from "react";
 import { InputValueContext } from "../../App";
-
+import { usePdfConverter } from "../pdfContex/PdfApi";
 
 function ResumeTemplateView() {
-  const { componentRef } = UsePdfConverter();
-    
-  const { formState } = useContext(InputValueContext);
+  // const { formState } = useContext(InputValueContext);
   const [storedData, setStoredData] = useState({});
-
-  
-  const resumeContentRef = useRef(null);
-
+const { componentRef} = usePdfConverter();
   const getDataFromLocalStorage = () => {
     const data = JSON.parse(localStorage.getItem("formState")) || {};
     setStoredData(data);
-    console.log({data: storedData})
+    console.log({ data: storedData });
   };
-
-  useEffect(() => {
-    getDataFromLocalStorage(); 
-    console.log({formState});
-  }, []);
-
-  // Ensure the ref is assigned to the resume content
-  useEffect(() => {
-    componentRef.current = resumeContentRef.current;
-  }, [resumeContentRef, componentRef]);
 
 
   return (
-    <div className="mx-5 my-3 flex flex-col gap-2 " ref={resumeContentRef}>
+    <div ref={componentRef} className="p-3 py-3 flex flex-col gap-2 ">
       {/* header */}
-      <div>
-        <h1 className="text-xl text-center capitalize">
-  
-            firstName and lastName
-
-         
+      <div ref={componentRef}>
+        <h1 className="text-lg text-center capitalize">
+          firstName and lastName
         </h1>
 
-        <h3 className="text-[14px]  text-center">
+        <h3 className="text-[12px]  text-center">
           {/* {storedData.address} | {storedData.conPhoneNumber} |{" "}
           {storedData.conEmail} | {storedData.linkedin} | {storedData.website} */}
-        address / phone / email / linkedin / website
+          address / phone / email / linkedin / website
         </h3>
       </div>
 
@@ -102,18 +83,24 @@ function ResumeTemplateView() {
         {/* {storedData.workExperience.map((item, index) => ( */}
         <div>
           <div className="flex justify-between">
-            <h4 className="font-semibold text-sm">{storedData.companyName}
-            company name</h4>
+            <h4 className="font-semibold text-sm">
+              {storedData.companyName}
+              company name
+            </h4>
             <h5 className="font-semibold text-sm">
               {storedData.expStartDate} / {storedData.expEndDate}
               1-2-1999 <br />/ 2-1-2000
             </h5>
           </div>
-          <p className="text-xs">{storedData.companyDescription}
-          company description</p>
+          <p className="text-xs">
+            {storedData.companyDescription}
+            company description
+          </p>
           <div className="mt-1">
-            <h4 className="font-semibold text-sm">{storedData.position}
-            position</h4>
+            <h4 className="font-semibold text-sm">
+              {storedData.position}
+              position
+            </h4>
           </div>
         </div>
         {/* ))} */}
@@ -126,8 +113,12 @@ function ResumeTemplateView() {
         {/* {storedData.project.map((item, index) => ( */}
         <div>
           <div className="flex justify-between">
-            <h4 className="font-semibold text-sm">{/* {item.title} */} project name</h4>
-            <h5 className="font-semibold text-sm">{/* {item.date} */} project date</h5>
+            <h4 className="font-semibold text-sm">
+              {/* {item.title} */} project name
+            </h4>
+            <h5 className="font-semibold text-sm">
+              {/* {item.date} */} project date
+            </h5>
           </div>
           <p className="text-xs">{/* {item.subtitle} */}</p>
           {/* <ul className="text-xs ml-5">
