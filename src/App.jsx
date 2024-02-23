@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Resume from "./pages/Resume";
 import Register from "./pages/auth/register";
 import { PdfConverterProvider } from "./components/pdfContex/PdfApi";
+import Login from "./pages/auth/login";
 
 // Create a context for managing input values
 const InputValueContext = createContext();
@@ -108,7 +109,8 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/myresume" element={<Resume />} />
-            <Route path="/" element={<Register />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<Login />} />
           </Routes>
         </BrowserRouter>
       </PdfConverterProvider>
